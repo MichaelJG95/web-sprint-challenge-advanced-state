@@ -5,6 +5,8 @@ import {
   SET_INFO_MESSAGE,
   SET_QUIZ_INTO_STATE,
   SET_SELECTED_ANSWER,
+  INPUT_CHANGE,
+  RESET_FORM,
 } from "./action-types"
 // ❗ You don't need to add extra action creators to achieve MVP
 export function moveClockwise() { 
@@ -27,9 +29,13 @@ export function setQuiz(data) {
   return { type: SET_QUIZ_INTO_STATE, payload: data}
  }
 
-export function inputChange() { }
+export function inputChange( name, value ) {
+  return { type: INPUT_CHANGE, payload: { name, value } } 
+ }
 
-export function resetForm() { }
+export function resetForm() {
+  return { type: RESET_FORM }
+ }
 
 // ❗ Async action creators
 export function fetchQuiz() {
@@ -66,11 +72,21 @@ export function postAnswer(data) {
     })
   }
 }
-export function postQuiz() {
+export function postQuiz(newQuiz) {
   return function (dispatch) {
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form
+    axios.post('http://localhost:9000/api/quiz/new', newQuiz)
+      .then(res => {
+        console.log('from post')
+        console.log(res)
+        dispatch(setMessage(`Congrats: "${newQuiz.question_text}" is a great question!`))
+        dispatch(resetForm())
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state

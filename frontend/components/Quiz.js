@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import { fetchQuiz, selectAnswer, postAnswer } from './../state/action-creators'
 
 function Quiz(props) {
-  console.log(props)
   const { quiz, selectedAnswer, fetchQuiz, selectAnswer, postAnswer } = props
 
   useEffect(() => {
-    fetchQuiz()
+    if ( quiz === null) fetchQuiz()
   }, [])
 
   // const submitHandler = () => {
