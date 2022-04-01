@@ -2,17 +2,18 @@
 import { combineReducers } from 'redux'
 import { 
   MOVE_CLOCKWISE,
-  MOVE_COUNTERCLOCKWISE
+  MOVE_COUNTERCLOCKWISE,
+  SET_INFO_MESSAGE,
+  SET_SELECTED_ANSWER,
+  SET_QUIZ_INTO_STATE,
 } from './action-types'
 
 const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
   switch (action.type) {
   case MOVE_CLOCKWISE:
-    console.log('move')
     return  state < 5 ? state + 1 : 0
   case MOVE_COUNTERCLOCKWISE:
-    console.log('move')
     return  state > 0 ? state - 1 : 5
   default:
     return state
@@ -22,6 +23,8 @@ function wheel(state = initialWheelState, action) {
 const initialQuizState = null
 function quiz(state = initialQuizState, action) {
   switch (action.type) {
+    case SET_QUIZ_INTO_STATE:
+      return action.payload
     default:
     return state
   }
@@ -30,6 +33,8 @@ function quiz(state = initialQuizState, action) {
 const initialSelectedAnswerState = null
 function selectedAnswer(state = initialSelectedAnswerState, action) {
   switch (action.type) {
+    case SET_SELECTED_ANSWER:
+      return action.payload
     default:
     return state
   }
@@ -38,6 +43,8 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
 const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
+    case SET_INFO_MESSAGE:
+      return action.payload
     default:
     return state
   }
